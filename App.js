@@ -1,14 +1,14 @@
 import 'react-native-gesture-handler';
-import { View, Text } from 'react-native'
-import React from 'react'
-import AppNavigationContainer from './src/navigations'
+import React from 'react';
+import AppNavigationContainer from './src/navigations';
+import GlobalProvider from './src/context/Provider';
 
 const App = () => {
   return (
-   <AppNavigationContainer>
+    <GlobalProvider>
+      <AppNavigationContainer/>
+    </GlobalProvider>
+  );
+};
 
-   </AppNavigationContainer>
-  )
-}
-
-export default App
+export default App;
