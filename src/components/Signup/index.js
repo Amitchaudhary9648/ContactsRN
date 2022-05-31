@@ -7,12 +7,15 @@ import styles from './styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import {LOGIN} from '../../constants/routesName';
+import { signupScreenConstants } from '../../constants/strings';
 
 const SignupComponent = ({onSubmit,
 onChange,
 form,
 errors}) => {
   const {navigate} = useNavigation();
+  const [passwordVisible, setPasswordVisible] = useState(true);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(true);
   return (
     <Container>
       <Image
@@ -20,35 +23,35 @@ errors}) => {
         style={styles.logoImage}
       />
       <View>
-        <Text style={styles.title}>Welcome to RNContaxts</Text>
-        <Text style={styles.subTitle}>Create a free account</Text>
+        <Text style={styles.title}>{signupScreenConstants.title}</Text>
+        <Text style={styles.subTitle}>{signupScreenConstants.subTitle}</Text>
         <View style={styles.form}>
         <Input 
-            label="Username" 
-            placeholder="Enter First name"
+            label={signupScreenConstants.userName} 
+            placeholder={signupScreenConstants.userNamePlaceHolder}
             onChangeText={(value) => {
               onChange({name: 'userName', value})
             }}
             error={errors.userName} />
           <Input 
-            label="First Name" 
-            placeholder="Enter First name"
+            label={signupScreenConstants.firstName}
+            placeholder={signupScreenConstants.firstName}
             onChangeText={(value) => {
               onChange({name: 'firstName', value})
             }}
             error={errors.firstName} />
 
           <Input 
-            label="Last Name" 
-            placeholder="Enter Last name"
+            label={signupScreenConstants.lastName}
+            placeholder={signupScreenConstants.lastName}
             error={errors.lastName}
             onChangeText={(value) => {
               onChange({name: 'lastName', value})
             }}  />
 
           <Input 
-            label="Email" 
-            placeholder="Enter Email"
+            label={signupScreenConstants.email}
+            placeholder={signupScreenConstants.emailPlaceHolder}
             error={errors.email}
             onChangeText={(value) => {
               onChange({name: 'email', value})
@@ -56,36 +59,42 @@ errors}) => {
           />
 
           <Input
-            label="Password"
-            placeholder="Enter password"
-            icon={<Text>Show</Text>}
+            label={signupScreenConstants.password}
+            placeholder={signupScreenConstants.passwordPlaceHolder}
+            icon={
+            <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
+              <Text>{passwordVisible ? signupScreenConstants.show: signupScreenConstants.hide}</Text>
+              </TouchableOpacity>}
             iconPosition="right"
-            secureTextEntry={true}
+            secureTextEntry={passwordVisible}
             error={errors.password}
             onChangeText={(value) => {
               onChange({name: 'password', value})
             }} 
           />
           <Input
-            label="Confirm Password"
-            placeholder="Enter password again"
-            icon={<Text>Show</Text>}
+            label={signupScreenConstants.confirmPassword}
+            placeholder={signupScreenConstants.confirmPasswordPlaceHolder}
+            icon={
+            <TouchableOpacity onPress={() => setConfirmPasswordVisible(!confirmPasswordVisible)}>
+              <Text>{confirmPasswordVisible ? signupScreenConstants.show: signupScreenConstants.hide}</Text>
+              </TouchableOpacity>}
             iconPosition="right"
-            secureTextEntry={true}
+            secureTextEntry={confirmPasswordVisible}
             error={errors.confirmPassword} 
             onChangeText={(value) => {
               onChange({name: 'confirmPassword', value})
             }}
           />
 
-          <CustomButton onPress={onSubmit} title="Submit" primary />
+          <CustomButton onPress={onSubmit} title={signupScreenConstants.signUp} primary />
           <View style={styles.createSection}>
-            <Text style={styles.infoText}>Already have an account?</Text>
+            <Text style={styles.infoText}>{signupScreenConstants.alreadyHaveAccount}</Text>
             <TouchableOpacity
               onPress={() => {
                 navigate(LOGIN);
               }}>
-              <Text style={styles.linkBtn}>Login</Text>
+              <Text style={styles.linkBtn}>{signupScreenConstants.login}</Text>
             </TouchableOpacity>
           </View>
         </View>

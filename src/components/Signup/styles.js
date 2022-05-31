@@ -25,7 +25,8 @@ export default StyleSheet.create({
     createSection:{
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: 10
+        marginTop: 10,
+        marginBottom: 40
     },
     linkBtn:{
         paddingLeft: 10,

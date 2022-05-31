@@ -12,9 +12,8 @@ const AppNavigationContainer = () => {
   console.log('State->', isLoggedIn);
   return (
     <NavigationContainer>
-      <AuthNavigator /> 
-      {/* <HomeNavigator /> */}
-      {/* <DrawerNavigator /> */}
+      
+      {isLoggedIn ? <DrawerNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
 };
