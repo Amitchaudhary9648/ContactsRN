@@ -1,11 +1,14 @@
 import {View, Text} from 'react-native';
 import React, {useState} from 'react';
 import SignupComponent from '../../components/Signup';
+import env from '../../config/env';
 
 const SignupScreen = () => {
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
-
+  const {BACKEND_URL} = env;
+  console.log("Backend_URL", BACKEND_URL)
+  console.log("__DEV__", __DEV__)
   const onChange = ({name, value}) => {
     setForm({...form, [name]: value});
 
