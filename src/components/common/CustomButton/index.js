@@ -35,7 +35,7 @@ const CustomButton = ({
       onPress={onPress}>
         {loading && (
           <View style={styles.loaderSection}>
-          <ActivityIndicator color={colors.grey}/>
+          <ActivityIndicator color={"#000"}/>
         </View>
         )}
         <Text style={{color:disabled? 'black' : 'white', paddingLeft : loading ? 5 : 0}}>{title}</Text>

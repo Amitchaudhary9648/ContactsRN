@@ -1,17 +1,47 @@
 import {View, Text} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import SignupComponent from '../../components/Signup';
-import env from '../../config/env';
+import envs from '../../config/env';
+import axios from '../../helpers/axiosInterceptor';
+import signup, {clearAuthState} from '../../context/actions/auth/signup';
+import { GlobalContext } from '../../context/Provider';
+import {useNavigation} from '@react-navigation/native';
+import { LOGIN } from '../../constants/routesName';
+import authState from '../../context/initialStates/authState';
 
 const SignupScreen = () => {
+  const {navigate} = useNavigation(); 
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
-  const {BACKEND_URL} = env;
-  console.log("Backend_URL", BACKEND_URL)
-  console.log("__DEV__", __DEV__)
+  const {authDispatch, authState: {error, loading, data},} = useContext(GlobalContext);
+  const {DEV_BACKEND_URL} = envs;
+  
+
+  useEffect(() => {
+    axios.get('/contacts').catch((err) => {
+      console.log("Err", err);
+    })
+  }, [])
+
+  useEffect(()=>{
+    if(data){
+      navigate(LOGIN)
+    }
+  },[data])
+
+  useFocusEffect(
+    React.useCallback(() => {
+      return( () => {
+        if(data || error){
+          clearAuthState()(authDispatch)
+        }
+      })
+    }, [data, error])
+  )
+  
   const onChange = ({name, value}) => {
     setForm({...form, [name]: value});
-
     if (value !== '') {
       if (name === 'password') {
         if (value.length < 6) {
@@ -82,6 +112,15 @@ const SignupScreen = () => {
         return {...prev, confirmPassword: 'Please confirm the password'};
       });
     }
+
+    if(
+      Object.values(form).length === 6 &&
+      Object.values(form).every(item => item.trim().length > 0) && 
+      Object.values(errors).every(item => !item)
+      ){
+        console.log('1111',  1111);
+        signup(form)(authDispatch)
+    }
   };
 
   return (
@@ -90,6 +129,8 @@ const SignupScreen = () => {
       onChange={onChange}
       form={form}
       errors={errors}
+      error={error}
+      loading={loading}
     />
   );
 };

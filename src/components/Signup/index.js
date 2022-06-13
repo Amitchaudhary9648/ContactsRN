@@ -1,18 +1,23 @@
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import Container from '../common/Container';
 import Input from '../common/input';
 import CustomButton from '../common/CustomButton';
 import styles from './styles';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+
 import {useNavigation} from '@react-navigation/native';
 import {LOGIN} from '../../constants/routesName';
-import { signupScreenConstants } from '../../constants/strings';
+import {signupScreenConstants} from '../../constants/strings';
+import Message from '../common/Message';
 
-const SignupComponent = ({onSubmit,
-onChange,
-form,
-errors}) => {
+const SignupComponent = ({
+  onSubmit,
+  onChange,
+  form,
+  errors,
+  loading,
+  error,
+}) => {
   const {navigate} = useNavigation();
   const [passwordVisible, setPasswordVisible] = useState(true);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(true);
@@ -26,70 +31,107 @@ errors}) => {
         <Text style={styles.title}>{signupScreenConstants.title}</Text>
         <Text style={styles.subTitle}>{signupScreenConstants.subTitle}</Text>
         <View style={styles.form}>
-        <Input 
-            label={signupScreenConstants.userName} 
+          {error?.error && (
+            <Message
+              retry 
+              danger
+              retryFn={() => {
+                console.log("Retry")
+              }} 
+              message={error.error}
+            />
+          )}
+          <Input
+            label={signupScreenConstants.userName}
             placeholder={signupScreenConstants.userNamePlaceHolder}
-            onChangeText={(value) => {
-              onChange({name: 'userName', value})
+            onChangeText={value => {
+              onChange({name: 'userName', value});
             }}
-            error={errors.userName} />
-          <Input 
+            error={errors.userName || error?.username?.[0]}
+          />
+          <Input
             label={signupScreenConstants.firstName}
             placeholder={signupScreenConstants.firstName}
-            onChangeText={(value) => {
-              onChange({name: 'firstName', value})
+            onChangeText={value => {
+              onChange({name: 'firstName', value});
             }}
-            error={errors.firstName} />
+            error={errors.firstName || error?.first_name?.[0]}
+          />
 
-          <Input 
+          <Input
             label={signupScreenConstants.lastName}
             placeholder={signupScreenConstants.lastName}
-            error={errors.lastName}
-            onChangeText={(value) => {
-              onChange({name: 'lastName', value})
-            }}  />
+            error={errors.lastName || error?.last_name?.[0]}
+            onChangeText={value => {
+              onChange({name: 'lastName', value});
+            }}
+          />
 
-          <Input 
+          <Input
             label={signupScreenConstants.email}
+            autoCapitalize="none"
             placeholder={signupScreenConstants.emailPlaceHolder}
-            error={errors.email}
-            onChangeText={(value) => {
-              onChange({name: 'email', value})
-            }}  
+            error={errors.email || error?.email?.[0]}
+            onChangeText={value => {
+              onChange({name: 'email', value});
+            }}
+            
           />
 
           <Input
             label={signupScreenConstants.password}
             placeholder={signupScreenConstants.passwordPlaceHolder}
             icon={
-            <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
-              <Text>{passwordVisible ? signupScreenConstants.show: signupScreenConstants.hide}</Text>
-              </TouchableOpacity>}
+              <TouchableOpacity
+                onPress={() => setPasswordVisible(!passwordVisible)}>
+                <Text>
+                  {passwordVisible
+                    ? signupScreenConstants.show
+                    : signupScreenConstants.hide}
+                </Text>
+              </TouchableOpacity>
+            }
             iconPosition="right"
             secureTextEntry={passwordVisible}
-            error={errors.password}
-            onChangeText={(value) => {
-              onChange({name: 'password', value})
-            }} 
+            error={errors.password || error?.password?.[0]}
+            onChangeText={value => {
+              onChange({name: 'password', value});
+            }}
           />
           <Input
             label={signupScreenConstants.confirmPassword}
             placeholder={signupScreenConstants.confirmPasswordPlaceHolder}
             icon={
-            <TouchableOpacity onPress={() => setConfirmPasswordVisible(!confirmPasswordVisible)}>
-              <Text>{confirmPasswordVisible ? signupScreenConstants.show: signupScreenConstants.hide}</Text>
-              </TouchableOpacity>}
+              <TouchableOpacity
+                onPress={() =>
+                  setConfirmPasswordVisible(!confirmPasswordVisible)
+                }>
+                <Text>
+                  {confirmPasswordVisible
+                    ? signupScreenConstants.show
+                    : signupScreenConstants.hide}
+                </Text>
+              </TouchableOpacity>
+            }
             iconPosition="right"
             secureTextEntry={confirmPasswordVisible}
-            error={errors.confirmPassword} 
-            onChangeText={(value) => {
-              onChange({name: 'confirmPassword', value})
+            error={errors.confirmPassword}
+            onChangeText={value => {
+              onChange({name: 'confirmPassword', value});
             }}
           />
-
-          <CustomButton onPress={onSubmit} title={signupScreenConstants.signUp} primary />
+          {console.log("error in signup", error?.error)}
+          <CustomButton
+            onPress={onSubmit}
+            title={signupScreenConstants.signUp}
+            primary
+            loading={loading}
+            disabled={loading }
+          />
           <View style={styles.createSection}>
-            <Text style={styles.infoText}>{signupScreenConstants.alreadyHaveAccount}</Text>
+            <Text style={styles.infoText}>
+              {signupScreenConstants.alreadyHaveAccount}
+            </Text>
             <TouchableOpacity
               onPress={() => {
                 navigate(LOGIN);
