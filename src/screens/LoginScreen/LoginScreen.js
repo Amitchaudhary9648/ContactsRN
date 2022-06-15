@@ -6,10 +6,19 @@ import CustomButton from '../../components/common/CustomButton';
 import LoginComponent from '../../components/Login';
 import { GlobalContext } from '../../context/Provider';
 import loginUser from '../../context/actions/auth/loginUser';
+import { useRoute } from '@react-navigation/native';
 
 const LoginScreen = () => {
   const [form, setForm] = useState({});
-  const [errors, setErrors] = useState({});
+  const [justSignedUp, setJustSignedUp] = useState(false);
+  const {params} = useRoute();
+
+  React.useEffect(()=>{
+    if(params?.data){
+      setJustSignedUp(true)
+      setForm({...form, userName: params.data.username});
+    }
+  },[params])
 
   const {authDispatch, authState: {error, loading},} = useContext(GlobalContext);
 
@@ -21,6 +30,7 @@ const LoginScreen = () => {
   };
 
   const onChange = ({name, value}) => {
+    setJustSignedUp(false)
     setForm({...form, [name]: value});
   };
 
@@ -29,9 +39,9 @@ const LoginScreen = () => {
       onSubmit={onSubmit}
       onChange={onChange}
       form={form}
-      errors={errors}
       error={error}
       loading={loading}
+      justSignedUp={justSignedUp}
     />
   );
 };

@@ -10,7 +10,14 @@ import {REGISTER} from '../../constants/routesName';
 import {loginScreenConstants} from '../../constants/strings';
 import Message from '../common/Message';
 
-const LoginComponent = ({error, onChange, onSubmit, loading}) => {
+const LoginComponent = ({
+  error,
+  form,
+  justSignedUp,
+  onChange,
+  onSubmit,
+  loading,
+}) => {
   const [passwordVisible, setPasswordVisible] = useState(true);
   const {navigate} = useNavigation();
   return (
@@ -23,19 +30,18 @@ const LoginComponent = ({error, onChange, onSubmit, loading}) => {
         <Text style={styles.title}>{loginScreenConstants.title}</Text>
         <Text style={styles.subTitle}>{loginScreenConstants.subTitle}</Text>
         {error && !error.error && (
-          <Message onDismiss={() => {}} danger message="invalid"/>
+          <Message onDismiss={() => {}} danger message="invalid" />
         )}
         <View style={styles.form}>
-        {error?.error && (
-            <Message
-              retry 
-              danger
-              onDismiss
-              message={error.error}
-            />
+          {justSignedUp && (
+            <Message success  onDismiss={() => {}} message="Account Created Successfully" />
+          )}
+          {error?.error && (
+            <Message retry danger onDismiss message={error.error} />
           )}
           <Input
             label={loginScreenConstants.userName}
+            value={form.userName || null}
             placeholder={loginScreenConstants.userNamePlaceHolder}
             onChangeText={value => {
               onChange({name: 'userName', value});
@@ -49,21 +55,33 @@ const LoginComponent = ({error, onChange, onSubmit, loading}) => {
               onChange({name: 'password', value});
             }}
             icon={
-            <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
-                <Text>{passwordVisible ? loginScreenConstants.show : loginScreenConstants.hide}</Text>
-                </TouchableOpacity>}
+              <TouchableOpacity
+                onPress={() => setPasswordVisible(!passwordVisible)}>
+                <Text>
+                  {passwordVisible
+                    ? loginScreenConstants.show
+                    : loginScreenConstants.hide}
+                </Text>
+              </TouchableOpacity>
+            }
             iconPosition="right"
             secureTextEntry={passwordVisible}
           />
 
-          <CustomButton disabled={loading} loading={loading} onPress={onSubmit} title={loginScreenConstants.login} primary />
+          <CustomButton
+            disabled={loading}
+            loading={loading}
+            onPress={onSubmit}
+            title={loginScreenConstants.login}
+            primary
+          />
           <View style={styles.createSection}>
             <Text style={styles.infoText}>
               {loginScreenConstants.needNewAccount}
             </Text>
             <TouchableOpacity
               onPress={() => {
-              navigate(REGISTER);
+                navigate(REGISTER);
               }}>
               <Text style={styles.linkBtn}>{loginScreenConstants.signUp}</Text>
             </TouchableOpacity>

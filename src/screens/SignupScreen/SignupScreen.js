@@ -24,11 +24,7 @@ const SignupScreen = () => {
     })
   }, [])
 
-  useEffect(()=>{
-    if(data){
-      navigate(LOGIN)
-    }
-  },[data])
+  
 
   useFocusEffect(
     React.useCallback(() => {
@@ -119,7 +115,9 @@ const SignupScreen = () => {
       Object.values(errors).every(item => !item)
       ){
         console.log('1111',  1111);
-        signup(form)(authDispatch)
+        signup(form)(authDispatch)((response)=>{
+          navigate(LOGIN, {data: response})
+        })
     }
   };
 

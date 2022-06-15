@@ -1,4 +1,4 @@
-import {CLEAR_AUTH_STATE, LOGIN_FAILURE, LOGIN_LOADING, LOGIN_SUCCESS, SIGNUP_FAILURE, SIGNUP_LOADING, SIGNUP_SUCCESS} from '../../constants/actionTypes';
+import {CLEAR_AUTH_STATE, LOGIN_FAILURE, LOGIN_LOADING, LOGIN_SUCCESS, LOGOUT_USER, SIGNUP_FAILURE, SIGNUP_LOADING, SIGNUP_SUCCESS} from '../../constants/actionTypes';
 
 const authReducer = (state, action) => {
   switch (action.type) {
@@ -16,6 +16,13 @@ const authReducer = (state, action) => {
         loading: false,
         error: action.payload,
       };
+    case LOGOUT_USER:
+      return {
+        ...state,
+        loading: false,
+        data: null,
+        isLoggedIn: false
+      }
     case SIGNUP_LOADING:
       return {
         ...state,

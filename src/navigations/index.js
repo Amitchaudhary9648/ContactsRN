@@ -13,7 +13,7 @@ const AppNavigationContainer = () => {
     authState: {isLoggedIn},
   } = useContext(GlobalContext);
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(isLoggedIn);
   const [authLoaded, setAuthLoaded] = useState(false);
 
   const getUser = async () => {
@@ -33,7 +33,7 @@ const AppNavigationContainer = () => {
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [isLoggedIn]);
 
   console.log('isLoggedIn', isAuthenticated);
 

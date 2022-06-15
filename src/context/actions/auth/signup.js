@@ -1,7 +1,7 @@
 import { SIGNUP_FAILURE, SIGNUP_LOADING, SIGNUP_SUCCESS, CLEAR_AUTH_STATE } from "../../../constants/actionTypes";
 import axiosInstance from "../../../helpers/axiosInterceptor"
 
-export const clearAuthState = () => (dispatch) => {
+export const clearAuthState = () => (dispatch) =>  {
     dispatch({
         type: CLEAR_AUTH_STATE,
     })
@@ -13,7 +13,7 @@ export default ({
     userName: username, 
     firstName : first_name, 
     lastName : last_name
-}) => dispatch =>{
+}) => dispatch => (onSuccess) =>{
     dispatch({type: SIGNUP_LOADING})
     axiosInstance.post("auth/register", {
         email,
@@ -26,6 +26,7 @@ export default ({
             type: SIGNUP_SUCCESS, 
             payload: res.data
         })
+        onSuccess(res.data)
 
     }).catch( err => {
         console.log("Error from server",err.response.data)
