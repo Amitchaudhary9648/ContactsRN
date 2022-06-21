@@ -5,8 +5,11 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles';
 import { SETTINGS } from '../../constants/routesName';
 import logoutUser from '../../context/actions/auth/logoutUser';
+import { GlobalContext } from '../../context/Provider';
+import Icon from '../../components/common/Icon';
 
 const SideMenu = ({navigation}) => {
+  const {authDispatch} = React.useContext(GlobalContext);
   const handleLogout = () => {
     navigation.toggleDrawer()
     Alert.alert("Logout!", 'Are you sure you want to logout?', [
@@ -22,8 +25,8 @@ const SideMenu = ({navigation}) => {
     ])
   }
     const menuItems = [
-        {icon: <Text>T</Text>, name: "Settings", onPress: () => navigation.navigate(SETTINGS)},
-        {icon: <Text>T</Text>, name: "Logout", onPress: () =>{handleLogout}},
+        {icon: <Icon type="feather"  name={'settings'} size={20}  />, name: "Settings", onPress: () => navigation.navigate(SETTINGS)},
+        {icon: <Icon type="material-icon" name="logout" size={20} />, name: "Logout", onPress: () =>{handleLogout()}},
     ]
   return (
     <SafeAreaView>
@@ -36,9 +39,9 @@ const SideMenu = ({navigation}) => {
       />
       <View style={{paddingHorizontal: 70}}>
           {menuItems.map(({name, icon, onPress}) => (
-              <TouchableOpacity onPress={onPress} key={name}>
+              <TouchableOpacity onPress={onPress} key={name} style={styles.item}>
                     {icon}
-                    <Text style={styles.itemText}>{name}</Text>
+                    <Text style={styles.itemText} >{name}</Text>
               </TouchableOpacity>
           ))}
       </View>

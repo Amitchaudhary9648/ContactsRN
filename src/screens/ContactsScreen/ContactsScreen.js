@@ -1,33 +1,46 @@
-import { View, Text, TouchableOpacity } from 'react-native'
-import React, {useEffect} from 'react'
-import Container from '../../components/common/Container'
-import { useNavigation } from '@react-navigation/native'
-import logoutUser from '../../context/actions/auth/logoutUser'
-import { GlobalContext } from '../../context/Provider'
-
-
+import {View, Text, TouchableOpacity} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import Container from '../../components/common/Container';
+import {useNavigation} from '@react-navigation/native';
+import Icon from '../../components/common/Icon';
+import ContactsComponent from '../../components/ContactsComponent';
+import {GlobalContext} from '../../context/Provider';
+import getContacts from '../../context/actions/contacts/getContacts';
 
 const ContactsScreen = () => {
-  const {authDispatch} = React.useContext(GlobalContext);
-  const {setOptions, toggleDrawer} = useNavigation()
+  const {setOptions, toggleDrawer} = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
+  const {
+    contactsDispatch,
+    contactsState: {
+      getContacts: {data, loading},
+    },
+  } = useContext(GlobalContext);
+
+  useEffect(()=>{
+    getContacts()(contactsDispatch)
+  },[])
   useEffect(() => {
     setOptions({
       headerLeft: () => (
-        <TouchableOpacity 
+        <TouchableOpacity
           onPress={() => {
-            toggleDrawer()
-            logoutUser()(authDispatch);
+            toggleDrawer();
+            //logoutUser()(authDispatch);
           }}>
-          <Text>NAV</Text>
+          <Icon type="feather" name={'menu'} size={25} />
         </TouchableOpacity>
-      )
-    })
-  }, [])
+      ),
+    });
+  }, []);
   return (
-    <Container>
-      <Text>ContactsScreens</Text>
-    </Container>
-  )
-}
+    <ContactsComponent
+      modalVisible={modalVisible}
+      setModalVisible={setModalVisible}
+      data={data}
+      loading={loading}
+    />
+  );
+};
 
-export default ContactsScreen
+export default ContactsScreen;

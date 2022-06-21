@@ -9,6 +9,7 @@ const CustomButton = ({
     primary,
     disabled,
     loading,
+    danger,
     onPress,
 }) => {
   const getBgColor = () => {

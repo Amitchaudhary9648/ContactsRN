@@ -3,7 +3,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import SignupComponent from '../../components/Signup';
 import envs from '../../config/env';
-import axios from '../../helpers/axiosInterceptor';
+import axios from '../../helpers/axiosInstance';
 import signup, {clearAuthState} from '../../context/actions/auth/signup';
 import { GlobalContext } from '../../context/Provider';
 import {useNavigation} from '@react-navigation/native';

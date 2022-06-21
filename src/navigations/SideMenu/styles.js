@@ -15,6 +15,6 @@ export default StyleSheet.create({
     itemText:{
         fontSize: 16,
         paddingVertical: 10,
-        paddingLeft: 20
+        paddingLeft: 10
     }
 })

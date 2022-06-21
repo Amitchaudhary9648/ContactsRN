@@ -35,7 +35,7 @@ const AppNavigationContainer = () => {
     getUser();
   }, [isLoggedIn]);
 
-  console.log('isLoggedIn', isAuthenticated);
+  console.log('isLoggedIn', isLoggedIn);
 
   return (
     <>
