@@ -36,7 +36,6 @@ const getIconFont = (type) => {
         default:
             return FAIcon;
     }
-
 }
 
 const Icon = ({type, ...props}) => {
