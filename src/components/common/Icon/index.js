@@ -9,6 +9,10 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Foundation from 'react-native-vector-icons/Foundation'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+<<<<<<< Updated upstream
+=======
+import FAIcon from 'react-native-vector-icons/FontAwesome';
+>>>>>>> Stashed changes
 
 const getIconFont = (type) => {
     switch (type) {
@@ -32,7 +36,12 @@ const getIconFont = (type) => {
             return Foundation;
         case 'font-awesome':
             return FontAwesome;
+<<<<<<< Updated upstream
         
+=======
+        default:
+            return FAIcon;
+>>>>>>> Stashed changes
     }
 
 }

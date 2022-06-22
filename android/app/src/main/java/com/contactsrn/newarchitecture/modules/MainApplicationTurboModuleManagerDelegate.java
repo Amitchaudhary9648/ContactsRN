@@ -1,4 +1,4 @@
-package com.contactsrn.newarchitecture.modules;
+package com.amitc.rncontacts.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

@@ -39,7 +39,7 @@ const CustomButton = ({
           <ActivityIndicator color={"#000"}/>
         </View>
         )}
-        <Text style={{color:disabled? 'black' : 'white', paddingLeft : loading ? 5 : 0}}>{title}</Text>
+        <Text style={{color:disabled? 'black' : 'white', paddingLeft : loading ? 5 : 0}}>{loading ? "Please wait ..." : title}</Text>
     </TouchableOpacity>
   );
 };

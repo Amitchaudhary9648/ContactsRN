@@ -1,4 +1,4 @@
-package com.contactsrn.newarchitecture.components;
+package com.amitc.rncontacts.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

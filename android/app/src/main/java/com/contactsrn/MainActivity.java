@@ -1,4 +1,4 @@
-package com.contactsrn;
+package com.amitc.rncontacts;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

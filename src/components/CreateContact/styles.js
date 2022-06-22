@@ -4,5 +4,26 @@ export default StyleSheet.create({
     container:{
         flex: 1,
         backgroundColor: colors.white,
+    },
+    imageView:{
+        width: 150,
+        height: 150,
+        borderRadius: 150,
+    },
+    imageContainer:{
+        alignItems: 'center'
+    },
+    chooseText:{
+        color: colors.primary,
+        textAlign: 'center'
+    },
+    switch:{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingVertical: 10,
+        alignItems: 'center'
+    },
+    favoriteText:{
+        fontSize: 17
     }
 })
